@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GlowBoost Skincare</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Alpine.js -->
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  <!-- AOS (Animate On Scroll) -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  
+  <style>
+    html { scroll-behavior: smooth; }
+    body { scroll-margin-top: 0 !important; font-family: 'Poppins', sans-serif; }
+    h1, h2, h3 {
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+    p {
+      line-height: 1.6;
+    }
+    /* Spotlight effect styles */
+    #spotlight {
+      position: absolute;
+      pointer-events: none;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6));
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 60%);
+      transform: translate(-50%, -50%);
+      transition: background 0.2s ease, opacity 0.4s ease;
+      mix-blend-mode: screen;
+      top: 0; left: 0;
+      z-index: 10;
+      opacity: 1;
+    }
+    #spotlight.hidden {
+      opacity: 0;
+    }
+    .text-overlay-glass {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: saturate(180%) blur(10px);
+    }
+    .testimonial-card {
+      transition: transform 0.5s ease;
+    }
+    [x-cloak] { display: none !important; }
+    /* Arrow buttons */
+    .arrow-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 20;
+      background: white;
+      border-radius: 9999px;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      color: #7c3aed; /* purple-600 */
+      font-size: 1.75rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .arrow-btn:hover {
+      color: #c084fc; /* purple-300 */
+      transform: scale(1.1);
+    }
+    .arrow-left { left: -4.5rem; }
+    .arrow-right { right: -4.5rem; }
+    /* Testimonial cards */
+    .testimonial {
+      transition: opacity 0.6s ease, transform 0.5s ease, box-shadow 0.5s ease;
+      user-select: none;
+    }
+    .testimonial.active {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      position: relative !important;
+      transform: scale(1.05);
+      box-shadow: 0 20px 30px rgba(124, 58, 237, 0.3);
+    }
+    .testimonial:hover {
+      box-shadow: 0 25px 35px rgba(124, 58, 237, 0.4);
+    }
+    /* CTA hover effect */
+    #cta a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(124, 58, 237, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    /* Background gradient for features */
+    .bg-gradient-features {
+      background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800 font-sans" onload="window.scrollTo(0, 0)">
+
+<script>
+  // Initialize AOS animations
+  AOS.init({ once: true, duration: 800 });
+</script>
+
+<!-- HERO SECTION -->
+<section
+  id="hero"
+  class="text-white min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden"
+  style="background: url('CSS/images/herobg.jpg') no-repeat center center / cover;"
+  data-aos="fade-up"
+  aria-label="Hero section with product introduction"
+>
+  <div class="absolute top-6 left-0 right-0 flex justify-center z-20">
+    <div class="bg-black bg-opacity-75 px-6 py-2 rounded-md shadow-lg">
+      <h1 class="text-xl font-semibold tracking-widest text-pink-300 select-none font-poppins" tabindex="0">
+        GlowBoost Skincare
+      </h1>
+    </div>
+  </div>
+
+  <div id="spotlight" aria-hidden="true"></div>
+
+  <div class="max-w-4xl flex flex-col md:flex-row items-center relative z-10 gap-10">
+    <div class="text-center md:text-left text-overlay-glass p-6 rounded-lg">
+      <h2
+        class="text-5xl md:text-6xl font-bold mb-6 text-pink-100"
+        data-aos="zoom-in"
+        data-aos-easing="ease-out"
+        data-aos-delay="200"
+        tabindex="0"
+      >
+        GlowBoost Skincare
+      </h2>
+      <p
+        class="text-lg md:text-xl mb-8 text-pink-200"
+        data-aos="fade-up"
+        data-aos-easing="ease-out"
+        data-aos-delay="400"
+        tabindex="0"
+      >
+        Unlock radiant, clear skin with our all-natural skincare solutions. Clean. Simple. Powerful.
+      </p>
+      <a
+        href="#products"
+        class="inline-block bg-white text-purple-600 font-semibold py-3 px-6 rounded-full hover:bg-gray-100 transition duration-300 focus:outline-none focus:ring-4 focus:ring-purple-300"
+        data-aos="fade-up"
+        data-aos-easing="ease-out"
+        data-aos-delay="600"
+        role="button"
+        aria-label="Shop Now"
+      >
+        Shop Now
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE GLOWBOOST -->
+<section class="py-20 bg-gradient-features text-pink-300" data-aos="fade-up" aria-labelledby="why-choose-title">
+  <div class="max-w-6xl mx-auto px-6 text-center">
+    <h2 id="why-choose-title" class="text-4xl font-bold mb-12">
+      Why Choose GlowBoost?
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <!-- Feature 1 -->
+      <div
+        class="bg-gray-900 rounded-xl p-8 shadow hover:shadow-lg transition"
+        data-aos="fade-up"
+        data-aos-delay="100"
+        tabindex="0"
+        role="region"
+        aria-label="100% Natural"
+      >
+        <div class="text-pink-300 text-4xl mb-4" aria-hidden="true">🌿</div>
+        <h3 class="text-xl font-semibold mb-2">100% Natural</h3>
+        <p>Our products are made with clean, plant-based ingredients — nothing toxic, ever.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div
+        class="bg-gray-900 rounded-xl p-8 shadow hover:shadow-lg transition"
+        data-aos="fade-up"  
+        data-aos-delay="300"
+        tabindex="0"
+        role="region"
+        aria-label="Instant Glow"
+      >
+        <div class="text-pink-300 text-4xl mb-4" aria-hidden="true">⚡</div>
+        <h3 class="text-xl font-semibold mb-2">Instant Glow</h3>
+        <p>Get visible results in days — brighter, smoother, more confident skin guaranteed.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div
+        class="bg-gray-900 rounded-xl p-8 shadow hover:shadow-lg transition"
+        data-aos="fade-up"
+        data-aos-delay="500"
+        tabindex="0"
+        role="region"
+        aria-label="Deep Hydration"
+      >
+        <div class="text-pink-300 text-4xl mb-4" aria-hidden="true">💧</div>
+        <h3 class="text-xl font-semibold mb-2">Deep Hydration</h3>
+        <p>Hydrates deep below the surface to keep your skin soft, smooth, and clear all day long.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section
+  id="testimonials"
+  class="py-20 bg-white text-gray-800 relative"
+  data-aos="fade-up"
+  x-data="testimonialSlider()"
+  x-init="startRotation()"
+  @mouseenter="stopRotation()"
+  @mouseleave="startRotation()"
+  aria-labelledby="testimonials-title"
+  role="region"
+>
+  <h2 id="testimonials-title" class="text-4xl font-bold text-center mb-12">What Our Customers Say</h2>
+
+  <div class="relative max-w-xl mx-auto min-h-[280px]">
+    <template x-for="(testimonial, i) in testimonials" :key="i">
+      <div
+        class="testimonial absolute top-0 left-0 w-full opacity-0 pointer-events-none flex flex-col items-center text-center bg-purple-50 rounded-lg p-6 shadow-lg transition-opacity duration-600"
+        :class="{ 'active': currentIndex === i }"
+        style="user-select:none;"
+        tabindex="-1"
+        role="group"
+        :aria-hidden="currentIndex !== i"
+      >
+        <img :src="testimonial.photo" :alt="testimonial.name" class="rounded-full w-18 h-18 object-cover mb-4 shadow-md" />
+        <p class="mb-4 text-lg italic" x-text="`“${testimonial.text}”`"></p>
+        <p class="font-semibold" x-text="`- ${testimonial.name}`"></p>
+        <div class="flex space-x-1 mt-2" aria-label="5-star rating">
+          <!-- 5 stars -->
+          <template x-for="n in 5" :key="n">
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.538 1.118l-3.38-2.454a1 1 0 00-1.175 0l-3.38 2.454c-.783.57-1.838-.196-1.538-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.04 9.393c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.966z"/>
+            </svg>
+          </template>
+        </div>
+      </div>
+    </template>
+
+    <!-- Arrows on sides -->
+    <button
+      class="arrow-btn arrow-left"
+      @click="prev()"
+      aria-label="Previous testimonial"
+      title="Previous"
+    >
+      &#8592;
+    </button>
+    <button
+      class="arrow-btn arrow-right"
+      @click="next()"
+      aria-label="Next testimonial"
+      title="Next"
+    >
+      &#8594;
+    </button>
+  </div>
+
+  <script>
+    function testimonialSlider() {
+      return {
+        currentIndex: 0,
+        testimonials: [
+          {
+            name: "Ashley W.",
+            photo: "https://randomuser.me/api/portraits/women/65.jpg",
+            text: "I’ve never felt more confident in my skin! GlowBoost changed everything."
+          },
+          {
+            name: "Michael B.",
+            photo: "https://randomuser.me/api/portraits/men/43.jpg",
+            text: "Instant results and deep hydration — my skin has never looked better."
+          },
+          {
+            name: "Sofia R.",
+            photo: "https://randomuser.me/api/portraits/women/24.jpg",
+            text: "Clean ingredients and amazing results. I’m a customer for life!"
+          }
+        ],
+        interval: null,
+        startRotation() {
+          this.stopRotation();
+          this.interval = setInterval(() => {
+            this.next();
+          }, 7000);
+        },
+        stopRotation() {
+          if (this.interval) clearInterval(this.interval);
+        },
+        next() {
+          this.currentIndex = (this.currentIndex + 1) % this.testimonials.length;
+          this.startRotation();
+        },
+        prev() {
+          this.currentIndex = (this.currentIndex - 1 + this.testimonials.length) % this.testimonials.length;
+          this.startRotation();
+        }
+      };
+    }
+  </script>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="py-20 bg-gray-100 text-gray-800" data-aos="fade-right" aria-labelledby="products-title">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-12">
+    <div class="md:w-1/2 text-center md:text-left" data-aos="fade-up" data-aos-delay="200" tabindex="0">
+      <h2 id="products-title" class="text-4xl font-bold mb-4">GlowBoost Radiance Serum</h2>
+      <p class="mb-6 text-lg">Vitamin C, hyaluronic acid & green tea fade dark spots and boost glow.</p>
+      <a href="#" class="inline-block bg-purple-600 text-white font-semibold py-3 px-6 rounded-full hover:bg-purple-700 transition duration-300 focus:outline-none focus:ring-4 focus:ring-purple-300"
+         data-aos="zoom-in" data-aos-delay="400" role="button" aria-label="Buy GlowBoost Radiance Serum for $29.99">Buy for $29.99</a>
+    </div>
+    <div class="md:w-1/2" data-aos="fade-left" data-aos-delay="400">
+      <img src="CSS/images/product.jpg" alt="GlowBoost Serum" class="rounded-xl shadow-lg" />
+    </div>
+  </div>
+</section>
+
+<script>
+  // Smooth spotlight effect with easing on hero section
+  document.addEventListener('DOMContentLoaded', () => {
+    const spotlight = document.getElementById('spotlight');
+    const hero = document.getElementById('hero');
+    if (!spotlight || !hero) return;
+
+    let mouseX = 0, mouseY = 0;
+    let currentX = 0, currentY = 0;
+    const ease = 0.1;
+
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+      spotlight.style.background = 'radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 60%)';
+      spotlight.classList.remove('hidden');
+    });
+
+    function animate() {
+      currentX += (mouseX - currentX) * ease;
+      currentY += (mouseY - currentY) * ease;
+      spotlight.style.left = `${currentX}px`;
+      spotlight.style.top = `${currentY}px`;
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    hero.addEventListener('mouseleave', () => {
+      spotlight.classList.add('hidden');
+    });
+    hero.addEventListener('mouseenter', () => {
+      spotlight.classList.remove('hidden');
+    });
+  });
+</script>
+
+<!-- CTA Section -->
+<section id="cta" class="py-20 bg-gray-50 text-gray-800 max-w-4xl mx-auto px-6 text-center" data-aos="zoom-in" aria-labelledby="cta-title">
+  <h2 id="cta-title" class="text-4xl font-bold mb-6">Ready for Glowing Skin?</h2>
+  <p class="text-lg mb-8" tabindex="0">
+    Join thousands of happy customers who transformed their skincare routine with GlowBoost.
+  </p>
+  <a
+    href="#products"
+    class="inline-block bg-white text-purple-600 font-semibold py-3 px-8 rounded-full hover:bg-gray-100 transition duration-300 focus:outline-none focus:ring-4 focus:ring-purple-300"
+    data-aos="fade-up"
+    data-aos-delay="300"
+    role="button"
+    aria-label="Get Started Today"
+  >
+    Get Started Today
+  </a>
+</section>
+
+</body>
+</html>
